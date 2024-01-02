@@ -54,6 +54,7 @@ function Datatable() {
         userData.splice(item, 1);
         setUserData([...userData]);
     }
+
     return (
         <>
 
@@ -63,7 +64,7 @@ function Datatable() {
                 </Button>
             </div>
 
-            <table className="table  container">
+            <table className="table table-bordered  container">
                 <thead className="thead-dark">
                     <tr>
                         <th>Name</th>
@@ -75,7 +76,6 @@ function Datatable() {
                     </tr>
                 </thead>
                 <tbody>
-
                     {cond?
                     userData.map((item, index) => {
 
@@ -92,8 +92,7 @@ function Datatable() {
                                 <Button onClick={() => deleteItem(index)} className="mx-2 btn-danger">Delete</Button>
                             </td>
                         </tr>);
-                    }):<tr><td colSpan={6} className='text-center text-danger'>There is no data to show.</td></tr>}
-
+                    }):<tr><td colSpan={6} className='text-center text-danger fw-bold'>There is no data to show.</td></tr>}
                 </tbody>
             </table>
 
@@ -103,7 +102,7 @@ function Datatable() {
                     <EditModal modalstate={editShow} func={handleEditClose} editData={viewDataUser} updatefun={updateEdit} alluser={userData} />
                 </>
                 : ''}
-            <AddModal modalstate={show} func={handleClose} addfun={add} />
+            <AddModal modalstate={show} func={handleClose} addfun={add}/>
         </>
     )
 }

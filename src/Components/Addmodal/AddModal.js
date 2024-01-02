@@ -1,19 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
 
-function AddModal({modalstate,func, addfun}) {    
+function AddModal({ modalstate, func, addfun }) {
 
-    function validate(){
-        let newObj = {};
-        let modal = document.querySelector("#addmodal");
-        newObj.name = modal.querySelector("#name").value;
-        newObj.username = modal.querySelector("#username").value;
-        newObj.email = modal.querySelector("#email").value;
-        newObj.number = modal.querySelector("#number").value;
-        newObj.password = modal.querySelector("#password").value;
+    const [formData, setFormData] = useState({
+        name: "",
+        username: "",
+        email: "",
+        number: "",
+        password: ""
+    });
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        let newState = { ...formData, [name]: value };
+        setFormData(newState);
+    };
+
+    function validate() {
+        let newObj = formData;
         addfun(newObj);
     }
 
@@ -25,11 +33,14 @@ function AddModal({modalstate,func, addfun}) {
                 </Modal.Header>
                 <Modal.Body>
                     <Form>
-                    <Form.Group className="mb-3" controlId="name">
+                        <Form.Group className="mb-3" controlId="name">
                             <Form.Label>Name</Form.Label>
                             <Form.Control
                                 type="text"
                                 placeholder="Enter Your Name"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
                                 autoFocus
                             />
                         </Form.Group>
@@ -38,7 +49,9 @@ function AddModal({modalstate,func, addfun}) {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter Your Username"
-                                autoFocus
+                                name="username"
+                                value={formData.username}
+                                onChange={handleChange}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="email">
@@ -46,7 +59,9 @@ function AddModal({modalstate,func, addfun}) {
                             <Form.Control
                                 type="email"
                                 placeholder="name@example.com"
-                                autoFocus
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="number">
@@ -54,7 +69,9 @@ function AddModal({modalstate,func, addfun}) {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter Your Number"
-                                autoFocus
+                                name="number"
+                                value={formData.number}
+                                onChange={handleChange}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="password">
@@ -62,7 +79,9 @@ function AddModal({modalstate,func, addfun}) {
                             <Form.Control
                                 type="text"
                                 placeholder="Set New Password"
-                                autoFocus
+                                name="password"
+                                value={formData.password}
+                                onChange={handleChange}
                             />
                         </Form.Group>
                     </Form>
@@ -74,6 +93,7 @@ function AddModal({modalstate,func, addfun}) {
                     <Button variant="primary" onClick={validate}>
                         Save Changes
                     </Button>
+
                 </Modal.Footer>
             </Modal>
         </>

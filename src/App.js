@@ -1,7 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
 import Datatable from './Components/datatable/Datatable';
-import { useState, createContext, useEffect } from "react";
+import { useState, createContext } from "react";
 
 export const dataText = createContext();
 
@@ -29,15 +29,15 @@ function App() {
       email: "piyush@outlook.com",
       number: "222222222"
     }
-  ]
+  ];
 
 
   const [userData, setUserData] = useState(dataobject);
 
   return (
     <>
-      <dataText.Provider value={{userData, setUserData}}>
-        <Datatable array={dataobject}  />
+      <dataText.Provider value={{ userData, setUserData }}>
+        <Datatable array={dataobject} />
       </dataText.Provider>
     </>
   );

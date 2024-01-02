@@ -3,7 +3,6 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
 function ViewModal({ modalstate, func,  alluser }) {
-  // let userdata = alluser[viewData];
   return (
     <>
         <Modal show={modalstate} onHide={func} id="addmodal">

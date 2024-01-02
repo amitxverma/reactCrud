@@ -1,33 +1,44 @@
-import React, {  useEffect, useState } from 'react'
+import React, {useEffect, useState } from 'react'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 function EditModal({ modalstate, func, editData, alluser, updatefun }) {
     let userIndexData = alluser[editData];
-    const [name, setname] = useState(userIndexData.name);
-    const [username, setusername] = useState(userIndexData.username);
-    const [email, setemail] = useState(userIndexData.email);
-    const [number, setnumber] = useState(userIndexData.number);
-    const [password, setpassword] = useState(userIndexData.password);
-    useEffect(() => {
-        setname(userIndexData.name)
-        setusername(userIndexData.username)
-        setemail(userIndexData.email)
-        setnumber(userIndexData.number)
-        setpassword(userIndexData.password)
-    }, [editData]);
+
+    const [formData, setFormData] = useState({
+        name: "",
+        username: "",
+        email: "",
+        number: "",
+        password: ""
+    });
+
+    useEffect(()=>{
+        setFormData({
+            name: userIndexData.name,
+            username: userIndexData.username,
+            email: userIndexData.email,
+            number: userIndexData.number,
+            password: userIndexData.password
+        });
+    },[userIndexData]);
+   
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        let newState = { ...formData, [name]: value };
+        setFormData(newState);
+    };
+
+    
+
+   
+
     function validateedit() {
-        let newObj = {};
-        let modal = document.querySelector("#editmodal");
-        newObj.name = modal.querySelector("#name").value;
-        newObj.username = modal.querySelector("#username").value;
-        newObj.email = modal.querySelector("#email").value;
-        newObj.number = modal.querySelector("#number").value;
-        newObj.password = modal.querySelector("#password").value;
-        alluser[editData] = newObj;
-        updatefun(editData, newObj)
+        let newObj = formData;
+        updatefun(editData, newObj);
     }
+
     return (
         <>
             <Modal show={modalstate} onHide={func} id="editmodal">
@@ -41,8 +52,9 @@ function EditModal({ modalstate, func, editData, alluser, updatefun }) {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter Your Name"
-                                value={name}
-                                onChange={event => setname(event.target.value)}
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
                                 autoFocus
                             />
                         </Form.Group>
@@ -51,8 +63,9 @@ function EditModal({ modalstate, func, editData, alluser, updatefun }) {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter Your Username"
-                                value={username}
-                                onChange={event => setusername(event.target.value)}
+                                name="username"
+                                value={formData.username}
+                                onChange={handleChange}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="email">
@@ -60,8 +73,9 @@ function EditModal({ modalstate, func, editData, alluser, updatefun }) {
                             <Form.Control
                                 type="email"
                                 placeholder="name@example.com"
-                                value={email}
-                                onChange={event => setemail(event.target.value)}
+                                name="email"
+                                value={formData.email}
+                                onChange={handleChange}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="number">
@@ -69,8 +83,9 @@ function EditModal({ modalstate, func, editData, alluser, updatefun }) {
                             <Form.Control
                                 type="text"
                                 placeholder="Enter Your Number"
-                                value={number}
-                                onChange={event => setnumber(event.target.value)}
+                                name="number"
+                                value={formData.number}
+                                onChange={handleChange}
                             />
                         </Form.Group>
                         <Form.Group className="mb-3" controlId="password">
@@ -78,17 +93,19 @@ function EditModal({ modalstate, func, editData, alluser, updatefun }) {
                             <Form.Control
                                 type="text"
                                 placeholder="Set New Password"
-                                value={password}
-                                onChange={event => setpassword(event.target.value)}
+                                number="password"
+                                value={formData.password}
+                                onChange={handleChange}
                             />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
                     <Button onClick={func} variant='danger'>Close</Button>
-                    <Button onClick={validateedit} variant="secondary" >
+                    <Button onClick={validateedit} variant="primary" >
                         Save
                     </Button>
+                    
                 </Modal.Footer>
             </Modal>
         </>
